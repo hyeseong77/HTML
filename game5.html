@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>두더지 잡기 게임</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        .hole {
+            width: 80px;
+            height: 80px;
+            background-color: #c2b280;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .mole {
+            width: 60px;
+            height: 60px;
+            background-color: #8b4513;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>두더지 잡기 게임</h1>
+    <p>두더지가 나오면 클릭하세요!</p>
+
+    <div id="game-container"></div>
+    <p id="score-display">현재 점수: 0</p>
+    <!-- 남은 시간을 표시할 엘리먼트 추가 -->
+    <p id="time-display">남은 시간: 20초</p>
+
+    <script>
+        const gameContainer = document.getElementById("game-container");
+        const scoreDisplay = document.getElementById("score-display");
+        const timeDisplay = document.getElementById("time-display"); // 추가한 부분
+        let score = 0;
+        let timer;
+        let gameTimer;
+
+        function createHole() {
+            const hole = document.createElement("div");
+            hole.classList.add("hole");
+
+            const mole = document.createElement("div");
+            mole.classList.add("mole");
+
+            hole.appendChild(mole);
+
+            mole.addEventListener("click", () => {
+                score++;
+                updateScore();
+                mole.style.display = "none";
+            });
+
+            return hole;
+        }
+
+        function updateScore() {
+            scoreDisplay.innerText = `현재 점수: ${score}`;
+        }
+
+        // 시간 표시 업데이트 함수 추가
+        function updateTimerDisplay(time) {
+            timeDisplay.innerText = `남은 시간: ${time}초`;
+        }
+
+        function showMole() {
+            const moles = document.getElementsByClassName("mole");
+            const randomIndex = Math.floor(Math.random() * moles.length);
+            const mole = moles[randomIndex];
+            mole.style.display = "block";
+
+            timer = setTimeout(() => {
+                mole.style.display = "none";
+                showMole();
+            }, 1000);
+        }
+
+        function startGame() {
+            score = 0;
+            updateScore();
+            gameContainer.innerHTML = "";
+
+            for (let i = 0; i < 9; i++) {
+                const hole = createHole();
+                gameContainer.appendChild(hole);
+            }
+
+            showMole();
+
+            // 중간에도 점수를 표시하기 위해 추가
+            updateScore();
+
+            // 20초 뒤에 게임 종료
+            let timeLeft = 20; // 초기 남은 시간 설정
+            updateTimerDisplay(timeLeft); // 초기 표시
+            gameTimer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay(timeLeft);
+                if (timeLeft === 0) {
+                    stopGame();
+                }
+            }, 1000);
+        }
+
+        function stopGame() {
+            clearTimeout(timer);
+            clearInterval(gameTimer);
+            alert(`게임 종료! 최종 점수: ${score}`);
+        }
+
+        // 게임 시작 버튼 추가
+        const startButton = document.createElement("button");
+        startButton.innerText = "게임 시작";
+        startButton.addEventListener("click", startGame);
+        gameContainer.appendChild(startButton);
+
+        // 게임 종료 버튼 추가
+        const stopButton = document.createElement("button");
+        stopButton.innerText = "게임 종료";
+        stopButton.addEventListener("click", stopGame);
+        gameContainer.appendChild(stopButton);
+    </script>
+</body>
+</html>
+
+
+

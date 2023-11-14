@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Ten Game</title>
+</head>
+<body>
+    <script>
+        function matchTenGame() {
+            const user1 = prompt("첫번째 도전자님 닉네임을 입력하세요!");
+            alert(`${user1}님 시작하려면 확인 버튼을 누르세요.`);
+
+            const startTime1 = new Date().getTime();
+
+            alert("10초가 된 것 같으면 확인 버튼을 누르세요.");
+
+            const endTime1 = new Date().getTime();
+            const result1 = Math.abs(endTime1 - startTime1) / 1000;
+            const differenceFromTen1 = Math.abs(10 - result1);
+
+            alert(`종료시간 : ${result1.toFixed(2)}초`);
+            alert(`10초와의 차이: ${differenceFromTen1.toFixed(2)}초`);
+
+            const user2 = prompt("두번째 도전자님 닉네임을 입력하세요!");
+            alert(`${user2}님 시작하려면 확인 버튼을 누르세요.`);
+
+            const startTime2 = new Date().getTime();
+
+            alert("10초가 된 것 같으면 확인 버튼을 누르세요.");
+
+            const endTime2 = new Date().getTime();
+            const result2 = Math.abs(endTime2 - startTime2) / 1000;
+            const differenceFromTen2 = Math.abs(10 - result2);
+
+            alert(`종료시간 : ${result2.toFixed(2)}초`);
+            alert(`10초와의 차이: ${differenceFromTen2.toFixed(2)}초`);
+
+            const difference1 = result1 - result2;
+            const difference2 = result2 - result1;
+
+            if (difference1 < difference2) {
+                alert(`${user1}님이 ${user2}님보다 10초에 더 가까웠습니다!`);
+                alert(`차이: ${difference1.toFixed(2)}초`);
+            } else if (difference1 > difference2) {
+                alert(`${user2}님이 ${user1}님보다 10초에 더 가까웠습니다!`);
+                alert(`차이: ${difference2.toFixed(2)}초`);
+            } else {
+                alert(`${user1}님과 ${user2}님의 차이가 같습니다!`);
+            }
+        }
+
+        matchTenGame();
+    </script>
+</body>
+</html>
+
+

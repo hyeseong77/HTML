@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HJGame</title>
+</head>
+<body>
+    <script>
+        let HJscore = 0;
+
+        function gamePlay() {
+            alert("홀짝 게임에 오신 것을 환영합니다!\n\n" +
+                  "게임규칙: 점수를 배팅해보세요!\n" +
+                  "시작점수 2점을 가지고 홀짝을 맞추어 점수를 2배로 획득하세요!\n\n" +
+                  "시작하려면 확인 버튼을 누르세요.");
+
+            let goodAnswers = 0;
+            let game = true;
+            let score = 2; // 시작 점수를 2로 설정
+
+            while (game) {
+                let number = Math.floor(Math.random() * 10) + 1;
+                let result = (number % 2 === 0) ? 2 : 1;
+
+                let answer = parseInt(prompt("랜덤 숫자가 생성되었습니다. 만약 홀수라 생각하시면 [1], 짝수라 생각하시면 [2]를 입력하세요: "));
+
+                if (answer === result) {
+                    alert("정답입니다! 정답은 " + number + " 입니다.\n");
+                    goodAnswers++;
+
+                    if (goodAnswers <= 5) {
+                        score *= 2; // 2배씩 점수 증가
+                    }
+                } else {
+                    alert("오답입니다! 정답은 " + number + " 였습니다.\n");
+                    goodAnswers = 0;
+                    score = 0; // 오답 시 0점으로 초기화
+                    game = false; // 오답 시 게임 종료
+                }
+
+                alert("현재 스코어: " + score);
+                if (game) {
+                    let choice = parseInt(prompt("추가로 도전하시겠습니까? 성공시 점수 2배!\n" +
+                        "도전을 원하신다면 [1], 멈추실 경우 [2]를 입력해주세요."));
+
+                    if (choice === 2) {
+                        game = false;
+                    }
+                }
+            }
+
+            alert("게임이 종료되었습니다. 최종 스코어는 " + score + " 점 입니다.\n");
+            HJscore = score;
+            alert("====================\n");
+        }
+
+        gamePlay();
+    </script>
+</body>
+</html>
